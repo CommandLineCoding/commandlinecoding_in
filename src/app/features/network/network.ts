@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-network',
+  standalone: true,
   imports: [],
   templateUrl: './network.html',
-  styleUrl: './network.scss',
+  styleUrl: './network.scss'
 })
-export class Network {}
+export default class Network {}

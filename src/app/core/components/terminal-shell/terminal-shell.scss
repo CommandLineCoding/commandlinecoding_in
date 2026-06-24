@@ -1,0 +1,15 @@
+/* src/app/core/components/terminal-shell/terminal-shell.scss */
+.shell-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  background-color: #000000;
+}
+
+.viewport-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 32px;
+  background-color: #000000;
+}

@@ -1,0 +1,52 @@
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #000000;
+  border-bottom: 1px solid #1a1a1a;
+  padding: 8px 16px;
+  font-size: 14px;
+}
+
+.nav-left, .nav-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.system-root {
+  color: #00ff00;
+  font-weight: bold;
+  border-right: 1px solid #333333;
+  padding-right: 24px;
+}
+
+.nav-tabs {
+  display: flex;
+  gap: 16px;
+
+  a {
+    color: #888888;
+    padding: 2px 8px;
+    
+    &:hover {
+      color: #00ff00;
+      background-color: #121212;
+    }
+  }
+
+  .active-tab {
+    color: #00ff00;
+    border-bottom: 2px solid #00ff00;
+    background-color: #0a0a0a;
+  }
+}
+
+.terminal-prompt {
+  color: #555555;
+}
+
+.icon-group {
+  color: #00ff00;
+  cursor: pointer;
+}
