@@ -1,0 +1,142 @@
+.network-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.command-line-header {
+  font-size: 20px;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.meta-status {
+  font-size: 12px;
+  color: #888888;
+  border-bottom: 1px solid #1a1a1a;
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+}
+
+.contributors-matrix {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+  gap: 20px;
+}
+
+.contributor-card {
+  border: 1px solid #1a1a1a;
+  background-color: #000000;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  
+  .user-id {
+    color: #555555;
+  }
+
+  .status-indicator {
+    font-weight: bold;
+    &.online { color: #00ff00; }
+    &.offline { color: #555555; }
+    &.idle { color: #00ffff; }
+  }
+}
+
+.profile-block {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.avatar-stub {
+  width: 48px;
+  height: 48px;
+  border: 1px solid #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #050505;
+  
+  .avatar-art {
+    color: #333333;
+    font-size: 24px;
+  }
+}
+
+.identity {
+  .user-handle {
+    font-size: 18px;
+    color: #ffffff;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  
+  .attribute-line {
+    font-size: 12px;
+    color: #888888;
+    line-height: 1.4;
+  }
+
+  .role-highlight {
+    font-weight: bold;
+    &.root-admin { color: #ff3333; }
+    &.sudo-user { color: #00ffff; }
+    &.contributor { color: #00ff00; }
+  }
+}
+
+.ledger-block {
+  border-top: 1px dashed #1a1a1a;
+  padding-top: 12px;
+
+  .ledger-label {
+    font-size: 11px;
+    color: #00ffff;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+
+  .ledger-tokens {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+
+    .ledger-pill {
+      font-size: 11px;
+      background-color: #121212;
+      border: 1px solid #1a1a1a;
+      color: #888888;
+      padding: 2px 6px;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .contributors-matrix {
+    grid-template-columns: 1fr;
+  }
+}
+
+.network-loading-state {
+  border: 1px dashed #00ffff;
+  padding: 32px;
+  text-align: center;
+  color: #00ffff;
+  background-color: rgba(0, 255, 255, 0.01);
+}
+
+.network-error-state {
+  border: 1px dashed #ff3333;
+  padding: 32px;
+  text-align: center;
+  background-color: rgba(255, 51, 51, 0.01);
+}

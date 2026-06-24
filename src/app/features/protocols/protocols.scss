@@ -1,0 +1,164 @@
+.man-page-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  height: 100%;
+  background-color: #000000;
+  border: 1px solid #1a1a1a;
+}
+
+// Sidebar Setup
+.man-sidebar {
+  border-right: 1px solid #1a1a1a;
+  padding: 16px 0;
+  background-color: #030303;
+
+  .index-label {
+    padding: 0 16px 16px 16px;
+    font-size: 12px;
+    color: #888888;
+    font-weight: bold;
+    border-bottom: 1px solid #1a1a1a;
+    letter-spacing: 0.5px;
+  }
+}
+
+.index-links {
+  list-style: none;
+  margin-top: 16px;
+
+  li {
+    padding: 8px 16px;
+    font-size: 11px;
+    color: #666666;
+    cursor: pointer;
+    user-select: none;
+    text-transform: uppercase;
+
+    &:hover {
+      color: #00ff00;
+      background-color: #0a0a0a;
+    }
+  }
+}
+
+// Content Layout Matrix
+.man-content {
+  padding: 24px;
+  overflow-y: auto;
+  background-color: #000000;
+}
+
+.man-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: bold;
+  color: #ffffff;
+  border-bottom: 1px solid #1a1a1a;
+  padding-bottom: 8px;
+  margin-bottom: 32px;
+  text-transform: uppercase;
+}
+
+.man-section {
+  margin-bottom: 32px;
+
+  h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+}
+
+.section-block {
+  padding-left: 32px; // Simulates standard manual indents
+  font-size: 13px;
+  color: #aaaaaa;
+  line-height: 1.6;
+
+  p {
+    margin-bottom: 16px;
+  }
+}
+
+.text-neon-bold {
+  color: #00ff00;
+  font-weight: bold;
+}
+
+.highlight-token {
+  background-color: #1a1a1a;
+  padding: 2px 6px;
+  font-size: 12px;
+}
+
+// Code Block Frame
+.code-block-wrapper {
+  background-color: #040404;
+  border: 1px solid #141414;
+  padding: 16px !important;
+  font-family: inherit;
+  margin-bottom: 16px;
+  
+  p {
+    margin-bottom: 4px;
+    &:last-child { margin-bottom: 0; }
+  }
+}
+
+// Execution Lists
+.conduct-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+  margin-bottom: 24px;
+
+  li {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+
+    .bullet {
+      color: #00ff00;
+      font-weight: bold;
+      user-select: none;
+    }
+  }
+}
+
+// Brutalist Alert Box Frame
+.warning-alert-box {
+  border: 1px solid #ff3333;
+  background-color: rgba(255, 51, 51, 0.02);
+  padding: 16px;
+  margin-top: 24px;
+
+  .box-tag {
+    color: #ff3333;
+    font-weight: bold;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+
+  p {
+    color: #ffffff;
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .man-page-layout {
+    grid-template-columns: 1fr;
+  }
+  .man-sidebar {
+    display: none; // Offload index on localized viewport scales
+  }
+  .section-block {
+    padding-left: 0;
+  }
+}

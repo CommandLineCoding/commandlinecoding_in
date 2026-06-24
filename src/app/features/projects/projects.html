@@ -1,1 +1,64 @@
-<p>projects works!</p>
+@if (isLoading()) {
+  <div class="system-loading-state">
+    <p>⚡ RUNNING DIAGNOSTIC: Fetching ecosystem node arrays from remote database...</p>
+  </div>
+} @else if (systemError()) {
+  <div class="empty-state">
+    <p class="text-alert">!! KERNEL PANIC: {{ systemError() }} !!</p>
+  </div>
+} @else {
+  <div class="registry-wrapper">
+    <div class="registry-meta-bar">
+      <div class="search-input-wrapper">
+        <span class="prompt-symbol">#</span>
+        <input
+          type="text"
+          [ngModel]="searchQuery()"
+          (ngModelChange)="searchQuery.set($event)"
+          placeholder="filter nodes via runtime query..."
+          class="terminal-input"
+        />
+      </div>
+      <div class="metrics-counters">
+        <span>TOTAL_NODES: [{{ allNodes().length }}]</span>
+        <span>SORT: [DATE_DESC]</span>
+      </div>
+    </div>
+
+    <h1 class="registry-title">THE EXECUTION REGISTRY</h1>
+
+    <div class="nodes-grid">
+      @for (node of filteredNodes(); track node.id) {
+        <div class="node-card" [attr.data-status]="node.status">
+          <div class="card-header">
+            <span class="node-id">{{ node.id }}</span>
+            <span class="status-badge" [class]="node.status.toLowerCase()"
+              >[{{ node.status }}]</span
+            >
+          </div>
+
+          <div class="card-body">
+            <h2 class="node-title">> {{ node.title }}</h2>
+            <p class="node-desc">{{ node.description }}</p>
+          </div>
+
+          <div class="card-footer">
+            <div class="tags-row">
+              @for (tag of node.tags; track tag) {
+                <span class="tag-pill">{{ tag }}</span>
+              }
+            </div>
+            <div class="action-links">
+              <a href="#src" class="action-btn">[ SRC ]</a>
+              <a href="#node" class="action-btn">[ NODE ]</a>
+            </div>
+          </div>
+        </div>
+      } @empty {
+        <div class="empty-state">
+          <p class="text-alert">!! WARNING: NO DEPLOYED NODES MATCHED THE FILTER PARAMETERS !!</p>
+        </div>
+      }
+    </div>
+  </div>
+}

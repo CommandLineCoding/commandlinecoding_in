@@ -1,1 +1,62 @@
-<p>logs works!</p>
+<div class="logs-layout">
+  <aside class="sidebar-filters">
+    <div class="panel-label">[FILTERS_&_TAGS]</div>
+    <ul class="filter-list">
+      @for (cat of categories; track cat.code) {
+        <li 
+          (click)="toggleTag(cat.code)" 
+          [class.active-filter]="selectedTag() === cat.code"
+        >
+          <span class="tag-prefix">[{{ cat.code }}]</span> {{ cat.label }}
+        </li>
+      }
+    </ul>
+  </aside>
+
+  <main class="feed-area">
+    <div class="feed-header">
+      <span class="execution-string">./index_feed.sh --sort=desc</span>
+      <span class="count-metric">{{ filteredLogs().length }} ENTRIES FOUND</span>
+    </div>
+
+    @if (isLoading()) {
+      <div class="archive-loading-state">
+        <p>🔄 INDEX LOOKUP: Synchronizing system write logs from storage block...</p>
+      </div>
+    } @else if (systemError()) {
+      <div class="archive-error-state">
+        <p class="text-alert">!! ACCESS DENIED: {{ systemError() }} !!</p>
+      </div>
+    } @else {
+      <div class="entries-stack">
+        @for (log of filteredLogs(); track log.id) {
+          <article class="log-row">
+            <div class="row-meta">
+              <div class="meta-left">
+                <span class="timestamp">[{{ log.timestamp }}]</span>
+                <span class="author-handle">{{ log.author }}</span>
+              </div>
+              <div class="read-time">READ_TIME: {{ log.read_time }}m</div>
+            </div>
+            
+            <h2 class="log-heading">{{ log.title }}</h2>
+            
+            <div class="row-footer">
+              <div class="tags-group">
+                @for (t of log.tags; track t) {
+                  <span class="inline-tag">[{{ t }}]</span>
+                }
+              </div>
+            </div>
+          </article>
+        } @empty {
+          <div class="empty-feed">
+            <p class="text-alert">-- EOF: NO ENTRIES LOGGED UNDER SELECT VECTOR --</p>
+          </div>
+        }
+        
+        <div class="eof-marker">--- [EOF] ---</div>
+      </div>
+    }
+  </main>
+</div>

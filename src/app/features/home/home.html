@@ -12,28 +12,30 @@
 
   <div class="main-split">
     <div class="terminal-section process-section">
-      <div class="section-tag">proc/status.log</div>
-      <div class="section-content">
-        <h2>LIVE_PROCESSES</h2>
-        <hr class="section-divider">
+  <div class="section-tag">proc/status.log</div>
+  <div class="section-content">
+    <h2>LIVE_PROCESSES</h2>
+    <hr class="section-divider">
 
+    @if (isLoading()) {
+      <p class="text-muted">⚡ CONSTRUCTING CHANNEL: Opening websocket connection layer...</p>
+    } @else {
+      @for (proc of liveProcesses(); track proc.id) {
         <div class="process-card">
-          <div class="card-badge active-badge">[ACTIVE]</div>
+          <div class="card-badge" [class]="proc.status.toLowerCase() + '-badge'">
+            [{{ proc.status }}]
+          </div>
           <div class="card-details">
-            <h3>Project Axiom</h3>
-            <p class="text-muted">> Compiling C++ JIT architecture... 87%</p>
+            <h3>{{ proc.title }}</h3>
+            <p class="text-muted">> {{ proc.message }}</p>
           </div>
         </div>
-
-        <div class="process-card">
-          <div class="card-badge tracking-badge">[TRACKING]</div>
-          <div class="card-details">
-            <h3>100 Days of FOSS</h3>
-            <p class="text-muted">> Day 42/100: Refactoring core networking stack.</p>
-          </div>
-        </div>
-      </div>
-    </div>
+      } @empty {
+        <p class="text-muted">-- SYSTEM IDLE: NO LIVE CHANNELS BROADCASTING --</p>
+      }
+    }
+  </div>
+</div>
 
     <div class="terminal-section connect-section">
       <div class="section-tag">bin/connect</div>

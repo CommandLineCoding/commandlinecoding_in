@@ -1,1 +1,77 @@
-<p>protocols works!</p>
+<div class="man-page-layout">
+  <aside class="man-sidebar">
+    <div class="index-label">[INDEX]</div>
+    <ul class="index-links">
+      @for (item of indexItems; track item.anchor) {
+        <li (click)="scrollToSection(item.anchor)">{{ item.label }}</li>
+      }
+    </ul>
+  </aside>
+
+  <main class="man-content">
+    <div class="man-header">
+      <span class="header-left">PROTOCOLS (7)</span>
+      <span class="header-center">System Administration Manual</span>
+      <span class="header-right">PROTOCOLS (7)</span>
+    </div>
+
+    <div class="man-body">
+      <section id="name" class="man-section">
+        <h3>NAME</h3>
+        <div class="section-block">
+          <p><span class="text-neon-bold">protocols</span> - Community Rules, Operational Guidelines, and Standards for the commandlinecoding.in environment.</p>
+        </div>
+      </section>
+
+      <section id="synopsis" class="man-section">
+        <h3>SYNOPSIS</h3>
+        <div class="section-block code-block-wrapper">
+          <p><span class="text-cyan">source</span> ~/.protocols</p>
+          <p><span class="text-cyan">chmod</span> 777 /community/interactions</p>
+          <p><span class="text-cyan">make</span> contributions <span class="text-muted"># Must pass DEF_OF_DONE</span></p>
+        </div>
+      </section>
+
+      <section id="description" class="man-section">
+        <h3>DESCRIPTION</h3>
+        <div class="section-block">
+          <p>This document outlines the standard operating procedures, behavioral expectations, and quality gates for all processes within the commandlinecoding.in collective. Adherence to these protocols is mandatory. Violations are logged and may result in a <span class="highlight-token text-alert">SIGTERM</span> signal being sent to your active session.</p>
+          <p>The philosophy is rooted in technical excellence, clear communication, and brutal efficiency. Visual noise, unstructured debate, and incomplete patches are considered systemic errors.</p>
+        </div>
+      </section>
+
+      <section id="conduct" class="man-section">
+        <h3>CODE OF CONDUCT</h3>
+        <div class="section-block">
+          <p>All nodes in the network must adhere to the following interaction parameters:</p>
+          
+          <ul class="conduct-list">
+            <li>
+              <span class="bullet">[*]</span>
+              <div>
+                <strong class="text-neon-bold">Clarity over Politeness:</strong> Direct, unambiguous communication is prioritized. Fluff and excessive pleasantries consume bandwidth.
+              </div>
+            </li>
+            <li>
+              <span class="bullet">[*]</span>
+              <div>
+                <strong class="text-neon-bold">Assume Competence, Verify Output:</strong> Trust the operator's intent, but heavily scrutinize the resultant code or action.
+              </div>
+            </li>
+            <li>
+              <span class="bullet">[*]</span>
+              <div>
+                <strong class="text-neon-bold">Zero Tolerance for Noise:</strong> Harassment, discriminatory language, or disruptive broadcasting (trolling) will result in immediate IP blacklisting via <span class="text-cyan">`iptables`</span>.
+              </div>
+            </li>
+          </ul>
+
+          <div class="warning-alert-box">
+            <div class="box-tag">[WARNING]</div>
+            <p>Failure to compile with the Code of Conduct will trigger automated moderation scripts.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>

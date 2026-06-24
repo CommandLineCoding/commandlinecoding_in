@@ -1,1 +1,57 @@
-<p>network works!</p>
+<div class="network-wrapper">
+  <div class="command-line-header">
+    <span class="prompt-text">> ls -la /contributors</span>
+  </div>
+  <div class="meta-status">
+    TOTAL_RECORDS: {{ contributors().length }} | DIRECTORY_STATUS: [SYNCED]
+  </div>
+
+  @if (isLoading()) {
+    <div class="network-loading-state">
+      <p>📡 QUERYING NODES: Resolving identity hashes from network pool...</p>
+    </div>
+  } @else if (systemError()) {
+    <div class="network-error-state">
+      <p class="text-alert">!! HANDSHAKE FAILURE: {{ systemError() }} !!</p>
+    </div>
+  } @else {
+    <div class="contributors-matrix">
+      @for (user of contributors(); track user.id) {
+        <div class="contributor-card">
+          <div class="card-top">
+            <span class="user-id">[ID: {{ user.id }}]</span>
+            <span class="status-indicator" [class]="user.status.toLowerCase()">
+              [STATUS: {{ user.status }}]
+            </span>
+          </div>
+
+          <div class="profile-block">
+            <div class="avatar-stub">
+              <span class="avatar-art">█</span>
+            </div>
+            <div class="identity">
+              <h2 class="user-handle">{{ user.handle }}</h2>
+              <p class="attribute-line">
+                ROLE: <span class="role-highlight" [class]="user.role.replace(' ', '-').toLowerCase()">{{ user.role }}</span>
+              </p>
+              <p class="attribute-line">CLASS: <span class="text-white">{{ user.class }}</span></p>
+            </div>
+          </div>
+
+          <div class="ledger-block">
+            <div class="ledger-label">COMMITMENT LEDGER</div>
+            <div class="ledger-tokens">
+              @for (token of user.ledger; track token) {
+                <span class="ledger-pill">{{ token }}</span>
+              }
+            </div>
+          </div>
+        </div>
+      } @empty {
+        <div class="network-error-state">
+          <p class="text-muted">-- ZERO RECORDS FOUND IN TARGET SEGMENT --</p>
+        </div>
+      }
+    </div>
+  }
+</div>
