@@ -1,5 +1,6 @@
 /* src/app/features/home/home.ts */
-import { Component, signal, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, signal, inject, OnInit, OnDestroy, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { SupabaseService } from '../../core/services/supabase';
 import { RealtimeChannel } from '@supabase/supabase-js';
 
@@ -19,14 +20,19 @@ interface SystemProcess {
 })
 export default class Home implements OnInit, OnDestroy {
   private database = inject(SupabaseService);
+  private platformId = inject(PLATFORM_ID);
   private realtimeChannel!: RealtimeChannel;
 
   liveProcesses = signal<SystemProcess[]>([]);
   isLoading = signal(true);
 
   async ngOnInit() {
-    await this.fetchInitialProcesses();
-    this.setupRealtimeSubscription();
+    if (isPlatformBrowser(this.platformId)) {
+      await this.fetchInitialProcesses();
+      this.setupRealtimeSubscription();
+    } else {
+      this.isLoading.set(false);
+    }
   }
 
   async fetchInitialProcesses() {
