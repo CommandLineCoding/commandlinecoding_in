@@ -1,1 +1,48 @@
-/* You can add global styles to this file, and also import other style files */
+/* src/styles.scss */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+// Design Tokens
+$bg-pure: #000000;
+$bg-surface: #0a0a0a;
+$bg-panel: #121212;
+$accent-neon: #00ff00;
+$accent-cyan: #00ffff;
+$color-alert: #ff3333;
+$color-muted: #555555;
+$font-mono: 'JetBrains Mono', monospace;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-radius: 0px !important; // Strict brutalist constraint
+}
+
+body {
+  background-color: $bg-pure;
+  color: $accent-neon;
+  font-family: $font-mono;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+// Global Terminal Helper Classes
+.terminal-block-btn {
+  background: transparent;
+  border: 1px solid $accent-neon;
+  color: $accent-neon;
+  font-family: $font-mono;
+  padding: 4px 12px;
+  cursor: pointer;
+  
+  &:hover {
+    background: $accent-neon;
+    color: $bg-pure; // Block inversion mechanism
+  }
+}
+
+.text-cyan { color: $accent-cyan; }
+.text-alert { color: $color-alert; }
+.text-muted { color: $color-muted; }
