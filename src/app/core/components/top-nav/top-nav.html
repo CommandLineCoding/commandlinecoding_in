@@ -2,7 +2,7 @@
   <div class="nav-left">
     <span class="system-root">~/commandlinecoding.in</span>
     <nav class="nav-tabs">
-      <a routerLink="/home" routerLinkActive="active-tab">~/Home</a>
+      <a routerLink="/" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active-tab">~/Home</a>
       <a routerLink="/projects" routerLinkActive="active-tab">~/Projects</a>
       <a routerLink="/logs" routerLinkActive="active-tab">~/Logs</a>
       <a routerLink="/network" routerLinkActive="active-tab">~/Network</a>
