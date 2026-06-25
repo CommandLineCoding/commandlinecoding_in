@@ -39,7 +39,11 @@
               <div class="read-time">READ_TIME: {{ log.read_time }}m</div>
             </div>
             
-            <h2 class="log-heading">{{ log.title }}</h2>
+            <h2 class="log-heading">
+              <a [routerLink]="['/logs', log.id]" class="log-view-link">
+                {{ log.title }}
+              </a>
+            </h2>
             
             <div class="row-footer">
               <div class="tags-group">

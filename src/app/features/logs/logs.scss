@@ -121,14 +121,6 @@
   }
 }
 
-.log-heading {
-  font-size: 18px;
-  font-weight: 700;
-  color: #ffffff;
-  line-height: 1.4;
-  margin-bottom: 12px;
-}
-
 .tags-group {
   display: flex;
   gap: 8px;
@@ -177,4 +169,23 @@
   border-bottom: 1px dashed #ff3333;
   background-color: rgba(255, 51, 51, 0.01);
   font-size: 13px;
+}
+
+.log-heading {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 12px;
+
+  .log-view-link {
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.1s ease;
+
+    &:hover {
+      color: #00ff00;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+  }
 }

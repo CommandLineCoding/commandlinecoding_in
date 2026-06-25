@@ -1,5 +1,5 @@
-/* src/app/features/logs/logs.ts */
 import { Component, signal, computed, inject, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { SupabaseService } from '../../core/services/supabase';
 
 interface LogEntry {
@@ -14,7 +14,7 @@ interface LogEntry {
 @Component({
   selector: 'app-logs',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './logs.html',
   styleUrl: './logs.scss'
 })
@@ -34,7 +34,6 @@ export default class Logs implements OnInit {
   isLoading = signal(true);
   systemError = signal<string | null>(null);
 
-  // Computes the log view filter instantly using reactive stream mapping
   filteredLogs = computed(() => {
     const tag = this.selectedTag();
     if (!tag) return this.allLogs();
@@ -49,6 +48,11 @@ export default class Logs implements OnInit {
     try {
       this.isLoading.set(true);
       
+      if (!this.database.client) {
+        this.systemError.set('CORE_DATABASE_SOCKET_UNINITIALIZED');
+        return;
+      }
+
       const { data, error } = await this.database.client
         .from('logs')
         .select('*')

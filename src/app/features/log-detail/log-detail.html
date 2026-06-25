@@ -1,0 +1,51 @@
+<div class="log-reader-frame">
+  <div class="reader-header">
+    <a routerLink="/logs" class="back-link">&lt;-- BACK_TO_ARCHIVE</a>
+    <span class="file-tag">[FILE: /var/log/archive/{{ logId() }}.md]</span>
+  </div>
+
+  @if (isLoading()) {
+    <div class="reader-loading">
+      <p>⏳ READING INODE: Unpacking static filesystem sector lines...</p>
+    </div>
+  } @else if (systemError()) {
+    <div class="reader-error">
+      <h2 class="text-alert">!! FILE REJECTED !!</h2>
+      <p class="text-muted">> Code: {{ systemError() }}</p>
+      <p class="text-muted">> Verify file ID is valid (e.g., L01, L02, L03).</p>
+    </div>
+  } @else if (logData(); as data) {
+    <article class="document-body">
+      <header class="doc-meta">
+        <h1 class="doc-title">{{ data.title }}</h1>
+        <div class="meta-row">
+          <span>TIMESTAMP: <span class="text-white">{{ data.timestamp }}</span></span>
+          <span>AUTHOR: <span class="text-cyan">{{ data.author }}</span></span>
+          <span>SIZE: <span class="text-cyan">{{ data.read_time }}m read</span></span>
+        </div>
+        <div class="tags-row">
+          @for (tag of data.tags; track tag) {
+            <span class="pill">[{{ tag }}]</span>
+          }
+        </div>
+      </header>
+
+      <hr class="doc-divider">
+
+      <section class="markdown-payload">
+        <h3>### EXECUTIVE_SUMMARY</h3>
+        <p>This report documents the diagnostic tracking and structural correction loop applied during the active incident pipeline window. Review logs indicate localized race mutations generated failures under stress distribution sequences.</p>
+        
+        <h3>### RESOLUTION_PROTOCOL</h3>
+        <div class="monospace-code-container">
+          <p><span class="text-alert"># Fix applied inline inside configuration registers</span></p>
+          <p>sysctl -w net.core.somaxconn=4096</p>
+          <p>service mainframe restart <span class="text-neon">[OK]</span></p>
+        </div>
+
+        <h3>### SYSTEM_IMPACT_METRICS</h3>
+        <p>Ecosystem metrics returned to safe parameters post-execution. State replication pipeline latency decreased by approximately 74% across active Cloudflare endpoints.</p>
+      </section>
+    </article>
+  }
+</div>

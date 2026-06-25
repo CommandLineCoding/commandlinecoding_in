@@ -19,6 +19,10 @@ export const routes: Routes = [
         loadComponent: () => import('./features/logs/logs')
       },
       {
+        path: 'logs/:id', // Dynamic log entry view vector
+        loadComponent: () => import('./features/log-detail/log-detail')
+      },
+      {
         path: 'network',
         loadComponent: () => import('./features/network/network')
       },

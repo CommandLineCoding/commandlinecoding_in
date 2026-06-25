@@ -7,8 +7,6 @@ import { Router } from '@angular/router';
 })
 export class TermService {
   private router = inject(Router);
-
-  // Core navigation vectors used for autocomplete matching
   private validPaths = ['home', 'projects', 'logs', 'network', 'protocols'];
 
   lines = signal<string[]>([
@@ -16,7 +14,6 @@ export class TermService {
     "Type 'help' to print the available command matrix."
   ]);
 
-  // Tracks historical commands entered across the session lifecycle
   history: string[] = [];
 
   exec(raw: string): void {
@@ -26,8 +23,8 @@ export class TermService {
     this.lines.update(l => [...l, `> ${raw}`]);
     this.history.push(raw);
 
-    const args = input.toLowerCase().split(' ');
-    const cmd = args[0];
+    const args = input.split(' ');
+    const cmd = args[0].toLowerCase();
 
     switch (cmd) {
       case 'help':
@@ -35,7 +32,8 @@ export class TermService {
           ...l,
           'AVAILABLE SYSTEM OPERATIONS:',
           '  ls          - List all main navigation nodes',
-          '  cd <dir>    - Change directories (e.g., cd projects, cd /)',
+          '  cd <dir>    - Change directories (e.g., cd projects)',
+          '  cat <id>    - Output contents of a technical log file (e.g., cat L01)',
           '  sysstat     - Echo live database/cluster metrics',
           '  clear       - Wipe terminal output history buffer'
         ]);
@@ -50,7 +48,11 @@ export class TermService {
         break;
 
       case 'cd':
-        this.handleNav(args[1]);
+        this.handleNav(args[1]?.toLowerCase());
+        break;
+
+      case 'cat':
+        this.handleCat(args[1]);
         break;
 
       case 'sysstat':
@@ -58,7 +60,6 @@ export class TermService {
           ...l,
           'SYS_STATUS : OK',
           'UPTIME     : 99.9%',
-          'ENGINE     : Angular 21 + Supabase Realtime',
           'ZONE       : Cloudflare Edge Network Node'
         ]);
         break;
@@ -75,11 +76,6 @@ export class TermService {
       const match = this.validPaths.find(p => p.startsWith(fragment));
       if (match) return `cd /${match}`;
     }
-    
-    const plainCmds = ['help', 'clear', 'ls', 'sysstat'];
-    const matchCmd = plainCmds.find(c => c.startsWith(tokens[0].toLowerCase()));
-    if (matchCmd && tokens.length === 1) return matchCmd;
-
     return currentInput;
   }
 
@@ -88,7 +84,6 @@ export class TermService {
       this.lines.update(l => [...l, 'err: target parameter omitted. Usage: cd <directory>']);
       return;
     }
-
     const dest = target.replace(/^\/|\/$/g, '');
 
     if (dest === 'home' || dest === '') {
@@ -100,5 +95,16 @@ export class TermService {
     } else {
       this.lines.update(l => [...l, `err: directory slice not found: /${target}`]);
     }
+  }
+
+  private handleCat(targetId: string): void {
+    if (!targetId) {
+      this.lines.update(l => [...l, 'err: target file reference omitted. Usage: cat <log_id> (e.g., cat L01)']);
+      return;
+    }
+    
+    const fileId = targetId.toUpperCase();
+    this.router.navigate([`/logs/${fileId}`]);
+    this.lines.update(l => [...l, `Reading contents of object: /logs/${fileId}`]);
   }
 }
