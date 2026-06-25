@@ -9,7 +9,8 @@
   margin-bottom: 16px;
   font-weight: bold;
   font-size: 13px;
-  word-break: break-all; 
+  word-break: break-all;
+  
   .user-prefix { color: #00ffff; }
   .command-string { color: #ffffff; margin-left: 8px; }
 }
@@ -198,6 +199,6 @@
   }
   
   .registry-matrix {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; // Drop to clean single column below 600px width boundaries
   }
 }
