@@ -6,6 +6,12 @@
   background-color: #000000;
 }
 
+app-top-nav {
+  position: relative;
+  z-index: 999;
+  margin-bottom: auto;
+}
+
 .viewport-area {
   flex: 1;
   overflow-y: auto;
