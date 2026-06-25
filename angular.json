@@ -30,11 +30,6 @@
                 "output": "/"
               },
               {
-                "glob": "_redirects",
-                "input": "public",
-                "output": "/"
-              },
-              {
                 "glob": "_headers",
                 "input": "public",
                 "output": "/"
