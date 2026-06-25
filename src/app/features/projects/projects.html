@@ -1,64 +1,61 @@
-@if (isLoading()) {
-  <div class="system-loading-state">
-    <p>⚡ RUNNING DIAGNOSTIC: Fetching ecosystem node arrays from remote database...</p>
+<div class="registry-viewport">
+  
+  <div class="terminal-command-line">
+    <span class="user-prefix">user&#64;system:~/COMMAND_LINE_CODING$</span>
+    <span class="command-string">./fetch_registry.sh --all</span>
   </div>
-} @else if (systemError()) {
-  <div class="empty-state">
-    <p class="text-alert">!! KERNEL PANIC: {{ systemError() }} !!</p>
-  </div>
-} @else {
-  <div class="registry-wrapper">
-    <div class="registry-meta-bar">
-      <div class="search-input-wrapper">
-        <span class="prompt-symbol">#</span>
-        <input
-          type="text"
-          [ngModel]="searchQuery()"
-          (ngModelChange)="searchQuery.set($event)"
-          placeholder="filter nodes via runtime query..."
-          class="terminal-input"
-        />
-      </div>
-      <div class="metrics-counters">
-        <span>TOTAL_NODES: [{{ allNodes().length }}]</span>
-        <span>SORT: [DATE_DESC]</span>
-      </div>
-    </div>
 
+  <header class="registry-header">
     <h1 class="registry-title">THE EXECUTION REGISTRY</h1>
-
-    <div class="nodes-grid">
-      @for (node of filteredNodes(); track node.id) {
-        <div class="node-card" [attr.data-status]="node.status">
-          <div class="card-header">
-            <span class="node-id">{{ node.id }}</span>
-            <span class="status-badge" [class]="node.status.toLowerCase()"
-              >[{{ node.status }}]</span
-            >
-          </div>
-
-          <div class="card-body">
-            <h2 class="node-title">> {{ node.title }}</h2>
-            <p class="node-desc">{{ node.description }}</p>
-          </div>
-
-          <div class="card-footer">
-            <div class="tags-row">
-              @for (tag of node.tags; track tag) {
-                <span class="tag-pill">{{ tag }}</span>
-              }
-            </div>
-            <div class="action-links">
-              <a href="#src" class="action-btn">[ SRC ]</a>
-              <a href="#node" class="action-btn">[ NODE ]</a>
-            </div>
-          </div>
-        </div>
-      } @empty {
-        <div class="empty-state">
-          <p class="text-alert">!! WARNING: NO DEPLOYED NODES MATCHED THE FILTER PARAMETERS !!</p>
-        </div>
-      }
+    
+    <div class="registry-metrics">
+      <div class="metric-item">TOTAL_NODES: <span class="cyan-value">[{{ totalNodes() }}]</span></div>
+      <div class="metric-item">SORT: <span class="muted-value">[ID_ASC]</span></div>
     </div>
+  </header>
+
+  <div class="registry-filter-bar">
+    <span class="filter-indicator">> Filter current nodes:</span>
+    <input 
+      type="text" 
+      class="inline-filter-input" 
+      placeholder="Type stack tag or title keyword..." 
+      [value]="localSearchQuery()"
+      (input)="onFilterChange($event)"
+    />
   </div>
-}
+
+  <div class="registry-matrix">
+    @for (project of filteredProjects(); track project.id) {
+      <article class="project-node-card">
+        
+        <div class="card-ribbon">
+          <span class="node-hex-id">ID:{{ project.id }}</span>
+          <span class="status-indicator-tag" [attr.data-status]="project.status">
+            [{{ project.status }}]
+          </span>
+        </div>
+
+        <h3 class="node-title">> {{ project.title }}</h3>
+        <p class="node-abstract">{{ project.description }}</p>
+
+        <div class="node-tags-list">
+          @for (tag of project.tags; track tag) {
+            <span class="stack-tag">{{ tag }}</span>
+          }
+        </div>
+
+        <div class="node-actions">
+          <a [href]="project.src_url" target="_blank" class="action-trigger-btn">[ SRC ]</a>
+          <a [href]="project.node_url" target="_blank" class="action-trigger-btn">[ NODE ]</a>
+        </div>
+
+      </article>
+    } @empty {
+      <div class="empty-registry-state">
+        <span class="text-alert">[SYSTEM_WARN]</span> No system nodes match the current filter instruction criteria.
+      </div>
+    }
+  </div>
+
+</div>

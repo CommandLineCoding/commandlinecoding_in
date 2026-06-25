@@ -1,64 +1,67 @@
 /* src/app/features/projects/projects.ts */
-import { Component, signal, computed, inject, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { SupabaseService } from '../../core/services/supabase';
 
-interface ProjectNode {
+export interface ProjectNode {
   id: string;
   title: string;
   description: string;
   status: 'ACTIVE' | 'STABLE' | 'BETA' | 'EXPERIMENTAL' | 'DEPRECATED';
   tags: string[];
+  src_url: string;
+  node_url: string;
 }
 
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [FormsModule],
+  imports: [CommonModule],
   templateUrl: './projects.html',
   styleUrl: './projects.scss'
 })
-export default class Projects implements OnInit {
-  private database = inject(SupabaseService);
-  
-  searchQuery = signal('');
-  allNodes = signal<ProjectNode[]>([]);
-  isLoading = signal(true);
-  systemError = signal<string | null>(null);
+export default class ProjectsComponent implements OnInit {
+  private supabase = inject(SupabaseService);
 
-  // Computed state stream filters live rows instantly
-  filteredNodes = computed(() => {
-    const query = this.searchQuery().toLowerCase().trim();
-    if (!query) return this.allNodes();
+  // Core data signals
+  projects = signal<ProjectNode[]>([]);
+  localSearchQuery = signal<string>('');
+
+  totalNodes = computed(() => this.projects().length);
+  
+  filteredProjects = computed(() => {
+    const query = this.localSearchQuery().toLowerCase().trim();
+    if (!query) return this.projects();
     
-    return this.allNodes().filter(node => 
-      node.title.toLowerCase().includes(query) || 
-      node.description.toLowerCase().includes(query) ||
-      node.tags.some(t => t.toLowerCase().includes(query))
+    return this.projects().filter(p => 
+      p.title.toLowerCase().includes(query) || 
+      p.description.toLowerCase().includes(query) ||
+      p.tags.some(t => t.toLowerCase().includes(query))
     );
   });
 
-  async ngOnInit() {
-    await this.fetchRegistryNodes();
+  ngOnInit() {
+    this.pullRegistryData();
   }
 
-  async fetchRegistryNodes() {
-    try {
-      this.isLoading.set(true);
-      
-      const { data, error } = await this.database.client
-        .from('projects')
-        .select('*')
-        .order('created_at', { ascending: false });
+  async pullRegistryData() {
+    const { data, error } = await this.supabase.client
+      .from('projects')
+      .select('*')
+      .order('id', { ascending: true });
 
-      if (error) throw error;
-      
-      this.allNodes.set(data as ProjectNode[]);
-    } catch (err: any) {
-      console.error('[SYS_ERR] Registry pull dropped:', err);
-      this.systemError.set(err.message || 'RUNTIME_SOCKET_TIMEOUT');
-    } finally {
-      this.isLoading.set(false);
+    if (error) {
+      console.error('[SYS_ERR] Failed to pull execution registry:', error);
+      return;
     }
+
+    if (data) {
+      this.projects.set(data as ProjectNode[]);
+    }
+  }
+
+  onFilterChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    this.localSearchQuery.set(inputElement.value);
   }
 }
