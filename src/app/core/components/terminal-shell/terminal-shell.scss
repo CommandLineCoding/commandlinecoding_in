@@ -1,23 +1,20 @@
-.shell-mainframe {
+.shell-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
   width: 100vw;
   background-color: #000000;
-  color: #ffffff;
-  font-family: 'Courier New', monospace;
-  overflow: hidden;
 }
 
 .viewport-area {
   flex: 1;
   overflow-y: auto;
-  background-color: #000000;
-  padding: 16px;
+  padding: 24px;
+  padding-bottom: 40px;
 }
 
-@media (max-width: 768px) {
-  .viewport-area {
-    padding: 10px;
-  }
+app-system-footer {
+  position: relative;
+  z-index: 999;
+  margin-top: auto;
 }

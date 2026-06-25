@@ -1,54 +1,47 @@
 <div class="home-grid">
-  <div class="terminal-section init-section">
-    <div class="section-tag">sys/init.sh</div>
-    <div class="section-content">
-      <h1 class="hero-prompt">
-        <span class="prompt-arrow">></span> _MISSION: 45+ Projects.<br>Zero to One. <span class="cursor">❚</span>
-      </h1>
-      <p class="text-muted">Initializing high-performance developer environment. Loading systemic modules...</p>
-      <p class="text-muted">Hard-edge brutalism enforced. Awaiting command input...</p>
-    </div>
-  </div>
+  
+  <section class="system-panel hero-panel">
+    <div class="panel-tag">sys/init.sh</div>
+    <h1 class="mission-title">> _MISSION: 45+ Projects. Zero to One.</h1>
+    <p class="panel-text">Initializing high-performance developer environment. Loading systemic modules...</p>
+    <p class="panel-text text-muted">Hard-edge brutalism enforced. Awaiting command input...</p>
+  </section>
 
-  <div class="main-split">
-    <div class="terminal-section process-section">
-  <div class="section-tag">proc/status.log</div>
-  <div class="section-content">
-    <h2>LIVE_PROCESSES</h2>
-    <hr class="section-divider">
-
-    @if (isLoading()) {
-      <p class="text-muted">⚡ CONSTRUCTING CHANNEL: Opening websocket connection layer...</p>
-    } @else {
-      @for (proc of liveProcesses(); track proc.id) {
-        <div class="process-card">
-          <div class="card-badge" [class]="proc.status.toLowerCase() + '-badge'">
-            [{{ proc.status }}]
+  <div class="split-row">
+    
+    <section class="system-panel tracking-panel">
+      <div class="panel-tag">proc/status.log</div>
+      <h2>LIVE_PROCESSES</h2>
+      
+      <div class="process-container">
+        @for (proc of liveProcesses(); track proc.id) {
+          <div class="process-row">
+            <div class="status-badge" [attr.data-status]="proc.status">
+              [{{ proc.status }}]
+            </div>
+            <div class="process-meta">
+              <span class="proc-name">{{ proc.process_name }}</span>
+              <span class="proc-details">> {{ proc.meta_details }}</span>
+            </div>
           </div>
-          <div class="card-details">
-            <h3>{{ proc.title }}</h3>
-            <p class="text-muted">> {{ proc.message }}</p>
+        } @empty {
+          <div class="process-row empty-state">
+            <span class="text-alert">[WARN]</span>
+            <span class="text-muted">Awaiting stream telemetry parameters from database instance...</span>
           </div>
-        </div>
-      } @empty {
-        <p class="text-muted">-- SYSTEM IDLE: NO LIVE CHANNELS BROADCASTING --</p>
-      }
-    }
-  </div>
-</div>
-
-    <div class="terminal-section connect-section">
-      <div class="section-tag">bin/connect</div>
-      <div class="section-content">
-        <h2 class="text-cyan">ESTABLISH_CONNECTION</h2>
-        <hr class="section-divider">
-        <p class="text-muted">Open socket to the mainframe. Authentication required via public key exchange.</p>
-
-        <div class="ssh-box">
-          <span class="ssh-prompt">$</span>
-          <span class="ssh-command">ssh join&#64;commandlinecoding.in</span>
-        </div>
+        }
       </div>
-    </div>
+    </section>
+
+    <section class="system-panel connect-panel">
+      <div class="panel-tag">bin/connect</div>
+      <h2>ESTABLISH_CONNECTION</h2>
+      <p class="panel-text">Open socket to the mainframe. Authentication required via public key exchange.</p>
+      
+      <div class="ssh-box">
+        <span class="prompt-char">$</span>
+        <span class="ssh-command">ssh join&#64;commandlinecoding.in</span>
+      </div>
+    </section>
   </div>
 </div>
