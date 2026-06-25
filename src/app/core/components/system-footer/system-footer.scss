@@ -33,3 +33,72 @@
     color: #00ffff;
   }
 }
+
+.bottom-terminal-tray {
+  height: 180px;
+  min-height: 180px;
+  background-color: #020202;
+  border-top: 2px solid #1a1a1a;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 16px;
+  box-sizing: border-box;
+  font-family: 'Courier New', monospace;
+
+  .terminal-banner {
+    font-size: 11px;
+    color: #555555;
+    font-weight: bold;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .terminal-log-scroller {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .log-line {
+      font-size: 13px;
+      color: #aaaaaa;
+      white-space: pre-wrap;
+      line-height: 1.4;
+    }
+  }
+
+  .prompt-input-row {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #111111;
+    padding-top: 6px;
+
+    .prompt-arrow {
+      color: #00ffff;
+      font-size: 13px;
+      font-weight: bold;
+      margin-right: 10px;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .terminal-core-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #00ff00;
+      font-family: inherit;
+      font-size: 13px;
+      caret-color: #00ff00;
+      width: 100%;
+
+      &::placeholder {
+        color: #333333;
+      }
+    }
+  }
+}

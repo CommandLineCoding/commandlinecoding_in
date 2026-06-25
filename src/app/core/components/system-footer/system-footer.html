@@ -1,16 +1,23 @@
-<footer class="system-footer">
-  <div class="footer-left">
-    <span>SYS_STATUS: <span class="status-ok">[OK]</span></span>
-    <span class="divider">|</span>
-    <span>UPTIME: <span class="text-white">99.9%</span></span>
-    <span class="divider">|</span>
-    <span>USERS: <span class="text-white">1.02K</span></span>
-    <span class="divider">|</span>
-    <span>VER: <span class="status-ok">2.4.0-STABLE</span></span>
+<footer class="bottom-terminal-tray">
+  <div class="terminal-banner">[SYSTEM_CONSOLE_LOG_STREAM]</div>
+  
+  <div class="terminal-log-scroller">
+    @for (line of term.lines(); track $index) {
+      <div class="log-line">{{ line }}</div>
+    }
+    <div #logEnd></div>
   </div>
-  <div class="footer-right">
-    <a href="#help">[HELP]</a>
-    <a href="#man">[MAN_PAGES]</a>
-    <a href="#logout">[LOGOUT]</a>
+
+  <div class="prompt-input-row">
+    <span class="prompt-arrow">guest@mainframe:~$</span>
+    <input 
+      #cmdPrompt
+      type="text" 
+      class="terminal-core-input" 
+      placeholder="Type console instruction... (e.g., help, ls, cd projects, clear)"
+      (keydown)="onKeyDown($event, cmdPrompt)"
+      (keydown.enter)="onSend(cmdPrompt)"
+      autofocus
+    />
   </div>
 </footer>
